@@ -1,10 +1,8 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+from .models import Plant
 # Create your views here.
-plants = [
-    {'name': 'Monstera', 'description': 'Monstera is a genus of 59 species of flowering plants in the arum family, Araceae, native to tropical regions of the Americas. Monstera plants make great indoor house plants.', 'size': 'small to very large'},
-    {'name': 'Basil', 'description': 'Basil, also called great basil, is a culinary herb of the family Lamiaceae. It is a tender plant, and is used in cuisines worldwide. ', 'size': 'small to medium'},
-]
 
 
 def home(request):
@@ -16,4 +14,25 @@ def about(request):
 
 
 def plants_index(request):
+    plants = Plant.objects.all()
     return render(request, 'plants/index.html', {'plants': plants})
+
+
+def plants_detail(request, plant_id):
+    plant = Plant.objects.get(id=plant_id)
+    return render(request, 'plants/detail.html', {'plant': plant})
+
+
+class PlantCreate(CreateView):
+    model = Plant
+    fields = '__all__'
+
+
+class PlantUpdate(UpdateView):
+    model = Plant
+    fields = '__all__'
+
+
+class PlantDelete(DeleteView):
+    model = Plant
+    success_url = '/plants'

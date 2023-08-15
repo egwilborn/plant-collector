@@ -4,10 +4,12 @@
 
 {% for plant in plants %}
 <div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ plant.name }}</span>
-    <p>Size: {{ plant.size }}</p>
-    <p>Description: {{ plant.description }}</p>
-  </div>
+  <a href="{% url 'detail' plant.id %}">
+    <div class="card-content">
+      <span class="card-title">{{ plant.name }}</span>
+      <p>Size: {{ plant.size }}</p>
+      <p>Description: {{ plant.description }}</p>
+    </div>
+  </a>
 </div>
 {%endfor%} {% endblock %}
