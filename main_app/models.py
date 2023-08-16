@@ -2,11 +2,26 @@ from django.db import models
 from django.urls import reverse
 # Create your models here.
 
+# adding a M:M relationship
+
+
+class Pot(models.Model):
+    size = models.CharField(max_length=100, default="blank")
+    material = models.CharField(max_length=100, default="blank")
+    color = models.CharField(max_length=100, default="blank")
+
+    def __str__(self):
+        return f"A {self.material}, {self.color} pot"
+
+    def get_absolute_url(self):
+        reverse('pots_detail', kwargs={'pk': self.id})
+
 
 class Plant(models.Model):
     name = models.CharField(max_length=100)
     size = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
+    pots = models.ManyToManyField(Pot)
 
     def __str__(self):
         return self.name
